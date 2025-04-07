@@ -264,7 +264,7 @@ function WorkspaceFlow() {
 
   return (
     <div className="h-screen w-full flex">
-      <div className="flex-1 relative">
+      <div className="flex-1 relative z-10">
         <div className="absolute right-4 top-4 z-10 flex gap-2">
           <Dialog open={isAddingNode} onOpenChange={setIsAddingNode}>
             <DialogTrigger asChild>
