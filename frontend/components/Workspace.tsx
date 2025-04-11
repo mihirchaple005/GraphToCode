@@ -25,6 +25,7 @@ import { StepNode } from "@/components/nodes/StepNode";
 import { RegionNode } from "@/components/nodes/RegionNode";
 import { CustomNode } from "@/components/nodes/CustomNode";
 import { generateCode } from "@/lib/generate-code";
+import { StepParameters } from "./parameters/StepParameters";
 
 const nodeTypes: NodeTypes = {
   step: StepNode,
@@ -188,6 +189,19 @@ function WorkspaceFlow() {
       ...prev,
       [id]: params,
     }));
+    setNodes((nds) =>
+      nds.map((node) =>
+        node.id === id
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                parameters: params, // <-- Inject params directly to node
+              },
+            }
+          : node
+      )
+    );
   }, []);
 
   const onNodesChange = useCallback((changes) => {
@@ -224,6 +238,7 @@ function WorkspaceFlow() {
 
   const handleGenerateCode = useCallback(async () => {
     try {
+      console.log("Parameters for code generation:", parameters);
       const code = await generateCode(parameters);
       setGeneratedCode(code);
       setShowCodePreview(true);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -73,8 +73,13 @@ const STEP_CONFIGS = {
   }
 };
 
+
+
 export function StepParameters({ step, onUpdate }: { step: number; onUpdate: (params: any) => void }) {
   const [params, setParams] = useState({});
+  const [data, setData] = useState<Record<string, Record<string, any>>>({});
+
+
   const config = STEP_CONFIGS[step as keyof typeof STEP_CONFIGS] || {
     title: "Custom Step",
     parameters: {
@@ -86,7 +91,33 @@ export function StepParameters({ step, onUpdate }: { step: number; onUpdate: (pa
     const newParams = { ...params, [key]: value };
     setParams(newParams);
     onUpdate(newParams);
+    console.log("Updated parameters:", newParams);
+    console.log("config title : ", config.title);
+
+    const updatedSelection = {
+      ...data[config.title],
+      [key]: value
+    };
+
+    const updatedData = {
+      ...data,
+      [config.title]: updatedSelection
+    };
+
+    setData(updatedData);
+    onUpdate(updatedData);  //propagate the updated data to the parent component
+    console.log("Updated data:", updatedData);
+    console.log("updatedData ", updatedData);
+    
   };
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("Final Data: ", data);
+    }, 1000);
+  }, [data]);
+
 
   return (
     <div className="space-y-4">

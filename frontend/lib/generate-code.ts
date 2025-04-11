@@ -69,5 +69,27 @@ if __name__ == "__main__":
     main()
 `;
 
+  // You can add more logic here to generate the Python code based on the parameters    
+  try {
+  const response : Response = await fetch('http://127.0.0.1:8080/api/generate-code', {
+      method: 'POST',
+      headers: {
+          'Content-type': 'application/json',
+      },
+      body: JSON.stringify({parameters}),
+    });
+
+      if (!response.ok) {
+            throw new Error('Network response was not ok');
+      }
+
+      const pyCode = await response.text();
+      console.log("Generated code:", pyCode);
+    
+  } catch (error) {
+    console.log("Error accured while generating code",error);
+    
+  }
+
   return pythonCode;
 }
