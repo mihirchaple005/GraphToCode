@@ -1,6 +1,7 @@
 export async function generateCode(parameters: any) {
   // Generate Python code based on the parameters
-  const pythonCode = `
+
+  let pythonCode = `
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -83,13 +84,21 @@ if __name__ == "__main__":
             throw new Error('Network response was not ok');
       }
 
-      const pyCode = await response.text();
-      console.log("Generated code:", pyCode);
+      const pyCode = await response.json();
+      console.log("Generated code:", pyCode.code);
+
+      if (pyCode.code) {
+        pythonCode = pyCode.code;
+      }
+      
     
   } catch (error) {
     console.log("Error accured while generating code",error);
     
   }
+
+  console.log("Generated code:", pythonCode);
+  
 
   return pythonCode;
 }

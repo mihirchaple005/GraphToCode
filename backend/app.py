@@ -3,20 +3,20 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask import Response
 from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
+
 
 
 app = Flask(__name__)
 CORS(app)
 
-api_key = os.getenv("MISTRAL_API_KEY")
+api_key = os.getenv(MISTRAL_API_KEY)
 
 if not api_key:
     raise EnvironmentError("MISTRAL_API_KEY is not set in the environment.")
 
 client = MistralClient(api_key=api_key)
 
-@app.route('/generate-code', methods=['GET'])
+@app.route('/api/generate-code', methods=['GET'])
 def generate_code():
     json_data = """{
             "nodes": [
