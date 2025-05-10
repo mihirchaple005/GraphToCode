@@ -3,6 +3,7 @@ from flask_cors import CORS
 from mistralai.client import MistralClient
 from dotenv import load_dotenv
 import os
+from mistralai.models.chat_completion import ChatMessage
 
 load_dotenv()
 
@@ -35,7 +36,9 @@ def generate_code_using_mistral():
         input_data = f"{prompt}\n{parameters}"
         print("input data : ", input_data)
 
-        messages = [{"role": "user", "content": input_data}]
+        messages = [
+        ChatMessage(role="user", content=input_data)
+    ]
 
         print("messages : ", messages)
 
@@ -48,12 +51,12 @@ def generate_code_using_mistral():
 
         generated_code = response.choices[0].message.content
         cleaned_code = generated_code.strip()
-        # if cleaned_code.startswith("```"):
-        #     cleaned_code = cleaned_code.split("```")[1].strip()
+        if cleaned_code.startswith("```"):
+            cleaned_code = cleaned_code.split("```")[1].strip()
         # if cleaned_code.startswith("python"):
         #     cleaned_code = cleaned_code[len("python"):].strip()
-        # if "```" in cleaned_code:
-        #     cleaned_code = cleaned_code.split("```")[0].strip()
+        if "```" in cleaned_code:
+            cleaned_code = cleaned_code.split("```")[0].strip()
 
         print("cleaned code : ", cleaned_code)
     

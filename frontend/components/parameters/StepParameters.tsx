@@ -32,7 +32,7 @@ const STEP_CONFIGS = {
     title: "Model Selection",
     parameters: {
       problem_type: ["classification", "regression", "clustering"],
-      algorithm: ["random_forest", "logistic_regression", "xgboost"],
+      algorithm: ["random_forest", "logistic_regression", "xgboost","svm","knn","decision_tree","naive_bayes","linear_regression","kmeans","ridge_regression","lasso_regression"],
       interpretability: ["high", "medium", "low"],
       training_speed: ["fast", "medium", "slow"]
     }
@@ -51,7 +51,7 @@ const STEP_CONFIGS = {
   5: {
     title: "Model Evaluation",
     parameters: {
-      metrics: ["accuracy", "f1", "roc_auc", "precision", "recall"],
+      metrics: ["accuracy", "f1", "roc_auc", "precision", "recall"," mse", "rmse","r2","mae"],
       confusion_matrix: "boolean",
       feature_importance: "boolean",
       shap_analysis: "boolean"

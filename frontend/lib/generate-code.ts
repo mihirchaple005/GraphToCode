@@ -1,6 +1,6 @@
 export async function generateCode(parameters: any) {
   // Generate Python code based on the parameters
-
+    
   let pythonCode = `
 import pandas as pd
 import numpy as np
